@@ -28,6 +28,27 @@ export class CompteService {
     this.token = token;
   }
 
+  getAllCompteFromBackend(token?: String){
+    if(token != null) {
+      console.log("lay ton token est null deh "+token);
+      this.setToken(token); 
+    }
+    ///var hea = new HttpHeaders(
+    var headers_object = new HttpHeaders({ 'Content-Type': 'application/json' });
+    headers_object.append('Authorization', 'Baerer ' +token);
+    console.log(headers_object);
+    const httpOptions = {
+      headers: headers_object
+    };
+    return this.http.get<ICompte>(
+      this.resourceUrl, httpOptions
+    ).subscribe(
+      data => {
+        console.log(data)
+      }
+    )
+  }
+
 //   create(compte: ICompte): Observable<EntityResponseType> {
 //     const copy = this.convertDateFromClient(compte);
 //     return this.http
@@ -100,25 +121,6 @@ export class CompteService {
 //     return options;
 // };
 
-  getAllCompteFromBackend(token?: String){
-    if(token != null) {
-      console.log("lay ton token est null deh "+token);
-      this.setToken(token); 
-    }
-    ///var hea = new HttpHeaders(
-    var headers_object = new HttpHeaders({ 'Content-Type': 'application/json' });
-    headers_object.append('Authorization', 'Baerer ' +token);
-    console.log(headers_object);
-    const httpOptions = {
-      headers: headers_object
-    };
-    return this.http.get<ICompte>(
-      this.resourceUrl, httpOptions
-    ).subscribe(
-      data => {
-        console.log(data)
-      }
-    )
-  }
+
 
 }
